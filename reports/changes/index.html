@@ -1,72 +1,41 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Change Reports</title>
-    <link rel="stylesheet" href="../assets/styles.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>수정 보고서 인덱스</title>
+    <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <main>
-      <div class="breadcrumbs">
-        <a href="../index.html">reports/ 홈</a>
-        <span>/</span>
-        <span>changes</span>
-      </div>
-
-      <header class="page-header">
-        <div class="kicker">Change Reports</div>
-        <h1>수정 보고서 목록</h1>
-        <p>실제 구조 변경, 문서 정리, 테스트 추가, 배포 준비 같은 수정 작업의 기록을 최신순으로 관리합니다.</p>
-      </header>
-
-      <section class="summary-grid">
-        <article class="stat status-success">
-          <h3>총 보고서</h3>
-          <strong>2건</strong>
-        </article>
-        <article class="stat status-success">
-          <h3>성공</h3>
-          <strong>2건</strong>
-        </article>
-        <article class="stat status-partial">
-          <h3>미확인</h3>
-          <strong>2건</strong>
-        </article>
-        <article class="stat">
-          <h3>카테고리 상태</h3>
-          <strong>공용 스타일 연동</strong>
-        </article>
+    <main class="page">
+      <section class="hero">
+        <h1>수정 보고서 인덱스</h1>
+        <div class="badge-row">
+          <span class="badge status-warning">최신 상태: 부분 성공</span>
+          <span class="badge status-danger">확인 여부: 미확인</span>
+        </div>
+        <p>Git 업로드 준비를 위해 생성한 수정 보고서 목록입니다.</p>
       </section>
 
-      <section class="list section">
-        <a class="list-item report-card status-success" href="2026-05-19/report-status-ui-refresh/index.html">
-          <div class="item-meta">
-            <span class="badge success">성공</span>
-            <span class="badge review-pending">미확인</span>
-            <span class="badge neutral">2026-05-19</span>
-            <span class="badge neutral">상태 UI 개편</span>
+      <section class="report-list">
+        <article class="report-card">
+          <div class="report-meta">
+            <span class="badge status-warning">부분 성공</span>
+            <span class="badge status-danger">미확인</span>
+            <span class="badge status-info">2026-05-19</span>
           </div>
-          <h3>Report Status UI Refresh</h3>
-          <p>
-            성공, 실패, 부분 성공, 보류 상태를 명확히 구분하는 배지 체계와 외부 참조 카테고리
-            연결을 보고서 허브 전반에 반영한 수정 보고서입니다.
-          </p>
-        </a>
-
-        <a class="list-item report-card status-success" href="2026-05-18/github-pages-bootstrap/index.html">
-          <div class="item-meta">
-            <span class="badge success">성공</span>
-            <span class="badge review-pending">미확인</span>
-            <span class="badge neutral">2026-05-18</span>
-            <span class="badge neutral">GitHub Pages Bootstrap</span>
+          <h3><a href="./2026-05-19/work-history-report/index.html">작업 내역 보고서</a></h3>
+          <p>이번 요청을 처리하면서 확인한 상태, 생성한 산출물, 남은 단계의 흐름을 정리합니다.</p>
+        </article>
+        <article class="report-card">
+          <div class="report-meta">
+            <span class="badge status-warning">부분 성공</span>
+            <span class="badge status-danger">미확인</span>
+            <span class="badge status-info">2026-05-19</span>
           </div>
-          <h3>GitHub Pages Report Hub Bootstrap</h3>
-          <p>
-            <code>reports/</code> 루트를 정적 웹 허브로 재구성하고, 카테고리 인덱스와 공용 스타일,
-            초기 변경 보고서를 연결한 첫 번째 변경 기록입니다.
-          </p>
-        </a>
+          <h3><a href="./2026-05-19/git-upload-preparation/index.html">Git 업로드 준비 수정 보고서</a></h3>
+          <p>보고서 구조 생성, 인덱스 정리, 업로드 체크리스트 준비 결과를 담고 있습니다.</p>
+        </article>
       </section>
     </main>
   </body>
