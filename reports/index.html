@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reports Hub</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <main>
+      <section class="hero">
+        <span class="eyebrow">GitHub Pages Static Hub</span>
+        <h1>reports/ 보고서 허브</h1>
+        <p>
+          이 공간은 GitHub Pages에서 바로 열 수 있도록 구성한 정적 보고서 허브입니다.
+          모든 페이지는 <code>index.html</code> 중심으로 정리되어 있고, 브라우저와 저장소
+          미리보기에서 모두 자연스럽게 이동할 수 있도록 상대 링크를 사용합니다.
+        </p>
+      </section>
+
+      <section class="section grid two">
+        <a class="card card-link" href="validation/index.html">
+          <div class="kicker">Category</div>
+          <h2>Validation Reports</h2>
+          <p>연결 확인, 접근 검증, 실행 점검 같은 현재 상태 검증 결과를 모아보는 영역입니다.</p>
+          <div class="meta">
+            <span class="badge neutral">현재 0건</span>
+            <span class="badge info">빈 상태 안내 포함</span>
+          </div>
+        </a>
+
+        <a class="card card-link" href="changes/index.html">
+          <div class="kicker">Category</div>
+          <h2>Change Reports</h2>
+          <p>코드, 설정, 문서, 배포 구조 변경처럼 실제 수정 작업의 이력과 검증 결과를 확인합니다.</p>
+          <div class="meta">
+            <span class="badge success">현재 1건</span>
+            <span class="badge info">초기 변경 보고서 연결</span>
+          </div>
+        </a>
+      </section>
+
+      <section class="section card">
+        <div class="kicker">Latest Preview</div>
+        <h2>최신 보고서 미리보기</h2>
+        <p class="section-lead">가장 최근에 추가된 보고서를 바로 열어볼 수 있습니다.</p>
+        <div class="list" style="margin-top: 20px">
+          <a class="list-item" href="changes/2026-05-18/github-pages-bootstrap/index.html">
+            <div class="item-meta">
+              <span class="badge success">성공</span>
+              <span class="badge neutral">수정 보고</span>
+              <span class="badge neutral">2026-05-18</span>
+            </div>
+            <h3>GitHub Pages Report Hub Bootstrap</h3>
+            <p>
+              <code>reports/</code>를 정적 웹 허브 구조로 정리하고, 루트 허브와 카테고리 인덱스,
+              공용 스타일, 초기 변경 보고서를 연결한 작업입니다.
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <p class="footer-note">
+        GitHub Pages 공개 설정 후에는 이 폴더를 정적 진입점으로 사용해 보고서를 브라우저에서 바로 열람할 수 있습니다.
+      </p>
+    </main>
+  </body>
+</html>
