@@ -11,13 +11,33 @@
       <section class="hero">
         <h1>진단 보고서 인덱스</h1>
         <div class="badge-row">
-          <span class="badge status-warning">최신 상태: 부분 성공</span>
+          <span class="badge status-success">최신 상태: 성공</span>
           <span class="badge status-danger">확인 여부: 미확인</span>
         </div>
         <p>현재 업로드 준비 상태와 Supabase 검증 결과를 포함한 진단 보고서 목록입니다.</p>
       </section>
 
       <section class="report-list">
+        <article class="report-card">
+          <div class="report-meta">
+            <span class="badge status-success">성공</span>
+            <span class="badge status-danger">미확인</span>
+            <span class="badge status-info">2026-05-19</span>
+          </div>
+          <h3><a href="./2026-05-19/supabase-crud-revalidation-results/index.html">Supabase CRUD 2차 검증 결과</a></h3>
+          <p>reports, report_confirmations, report_events, profiles 기준 실제 CRUD와 정리 결과를 다시 검증한 결과입니다.</p>
+        </article>
+
+        <article class="report-card">
+          <div class="report-meta">
+            <span class="badge status-success">성공</span>
+            <span class="badge status-danger">미확인</span>
+            <span class="badge status-info">2026-05-19</span>
+          </div>
+          <h3><a href="./2026-05-19/supabase-crud-revalidation-scenarios/index.html">Supabase CRUD 2차 검증 시나리오</a></h3>
+          <p>고유 슬러그 기반 테스트 데이터 생성, upsert 재확인, 이벤트 기록, 정리 순서를 정리한 시나리오 문서입니다.</p>
+        </article>
+
         <article class="report-card">
           <div class="report-meta">
             <span class="badge status-success">성공</span>
