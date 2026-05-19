@@ -1,72 +1,32 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Validation Reports</title>
-    <link rel="stylesheet" href="../assets/styles.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>진단 보고서 인덱스</title>
+    <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
-    <main>
-      <div class="breadcrumbs">
-        <a href="../index.html">reports/ 홈</a>
-        <span>/</span>
-        <span>validation</span>
-      </div>
-
-      <header class="page-header">
-        <div class="kicker">Validation Reports</div>
-        <h1>검증 보고서 목록</h1>
-        <p>접근성, 연결성, 배포 가능 여부, 실행 점검처럼 현재 상태를 확인하는 보고서를 이곳에서 관리합니다.</p>
-      </header>
-
-      <section class="summary-grid">
-        <article class="stat status-success">
-          <h3>총 보고서</h3>
-          <strong>2건</strong>
-        </article>
-        <article class="stat status-success">
-          <h3>성공</h3>
-          <strong>2건</strong>
-        </article>
-        <article class="stat status-partial">
-          <h3>미확인</h3>
-          <strong>2건</strong>
-        </article>
-        <article class="stat">
-          <h3>카테고리 상태</h3>
-          <strong>배지 규칙 적용 완료</strong>
-        </article>
+    <main class="page">
+      <section class="hero">
+        <h1>진단 보고서 인덱스</h1>
+        <div class="badge-row">
+          <span class="badge status-warning">최신 상태: 부분 성공</span>
+          <span class="badge status-danger">확인 여부: 미확인</span>
+        </div>
+        <p>현재 업로드 준비 상태와 누락 항목을 진단한 보고서 목록입니다.</p>
       </section>
 
-      <section class="list section">
-        <a class="list-item report-card status-success" href="2026-05-19/report-status-ui-refresh-check/index.html">
-          <div class="item-meta">
-            <span class="badge success">성공</span>
-            <span class="badge review-pending">미확인</span>
-            <span class="badge neutral">2026-05-19</span>
-            <span class="badge neutral">UI 규칙 검증</span>
+      <section class="report-list">
+        <article class="report-card">
+          <div class="report-meta">
+            <span class="badge status-warning">부분 성공</span>
+            <span class="badge status-danger">미확인</span>
+            <span class="badge status-info">2026-05-19</span>
           </div>
-          <h3>Report Status UI Refresh Check</h3>
-          <p>
-            보고서 허브의 상태 색상, 실패 강조 스타일, 카테고리 링크, 확인 여부 배지가 실제
-            HTML 구조 안에서 일관되게 표시되는지 점검한 검증 보고서입니다.
-          </p>
-        </a>
-
-        <a class="list-item report-card status-success" href="2026-05-19/failure-report-web-link-check/index.html">
-          <div class="item-meta">
-            <span class="badge success">성공</span>
-            <span class="badge review-pending">미확인</span>
-            <span class="badge neutral">2026-05-19</span>
-            <span class="badge neutral">웹 연결 검증</span>
-          </div>
-          <h3>Failure Report Web Link Check</h3>
-          <p>
-            기존 실패 보고서 Markdown을 HTML 탐색 구조에 연결하고, 루트 허브와 validation
-            인덱스, 상세 보고서 간 상대 링크가 GitHub Pages 경로에서 동작하는지 점검한 보고서입니다.
-          </p>
-        </a>
+          <h3><a href="./2026-05-19/git-upload-diagnostic/index.html">Git 업로드 준비 진단 보고서</a></h3>
+          <p>원본 보고서 누락 여부, 파일 구조, Git 저장소 상태를 점검한 결과입니다.</p>
+        </article>
       </section>
     </main>
   </body>
