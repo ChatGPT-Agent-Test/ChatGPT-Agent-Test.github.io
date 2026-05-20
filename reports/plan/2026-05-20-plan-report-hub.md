@@ -4,82 +4,72 @@ category: plan
 title: 개발 작업 리포트 허브 작업 수행 계획서
 status: published
 created_at: 2026-05-20T09:00:00+09:00
-updated_at: 2026-05-20T14:10:00+09:00
+updated_at: 2026-05-20T15:10:00+09:00
 author: agent
 project_key: report-hub
 tags:
   - github-pages
-  - supabase
+  - root-path
+  - base-path
   - report-hub
-  - validation
-summary: 루트 구조 기준 리포트 허브 구축, 점검 페이지 추가, GitHub Pages 및 Supabase 연동 기준 정리 계획
+summary: GitHub Pages 루트 배포 환경에서 BASE_PATH 오판으로 데이터 로딩이 실패한 원인을 기준으로 수정 작업 계획 수립
 ---
 
 # 개발 작업 리포트 허브 작업 수행 계획서
 
 ## 목표
-- 개발 작업 보고서 4종을 일관된 Markdown 구조로 관리한다.
-- 루트 기준 정적 사이트 구조에서 GitHub Pages 배포가 가능한 리포트 허브를 완성한다.
-- Supabase를 이용해 조회 이력과 확인 상태를 기록할 수 있게 한다.
-- 사용자가 점검 항목을 직접 체크하면서 다음 단계를 바로 확인할 수 있는 검증 페이지를 제공한다.
+- 현재 배포 환경이 GitHub Pages 사용자 루트 배포인지 다시 기준화한다.
+- 정적 자산과 데이터 파일이 실제 배포 경로에서 정상 로딩되도록 경로 계산 기준을 정리한다.
+- 동일 유형의 경로 오판 문제가 메인 화면, 상세 화면, 체크리스트 화면에서 반복되지 않도록 수정 범위를 정의한다.
+- 원인 분석 내용을 4종 보고서로 남겨 이후 검증과 유지보수의 기준 문서로 사용한다.
+
+## 배경
+현재 페이지 레이아웃 자체는 정상적으로 보이지만, 메인 화면의 데이터 영역이 모두 "불러오지 못했습니다" 상태로 남아 있었다. 확인 결과 배포 주소는 `https://chatgpt-agent-test.github.io/` 인데, 프런트엔드 설정은 프로젝트 사이트 하위 경로를 전제로 `BASE_PATH` 를 계산하고 있었다.
+
+## 핵심 원인
+- 저장소는 `ChatGPT-Agent-Test.github.io` 형태의 사용자 페이지 저장소다.
+- 실제 배포 기준 경로는 루트(`/`)여야 한다.
+- 그러나 `assets/js/config.js` 에서 `REPOSITORY_NAME: 'report-hub-site'` 값과 GitHub Pages 프로젝트 사이트용 base path 계산 로직이 남아 있었다.
+- 그 결과 화면은 `data/reports.json` 대신 `/report-hub-site/data/reports.json` 같은 잘못된 경로를 조회하게 되었고, `init()` 전체가 catch 로 빠져 실패 UI를 표시했다.
 
 ## 작업 범위
 ### 포함 범위
-- 보고서 4종 Markdown 파일 관리
-- 루트 기준 `index.html`, `pages`, `assets`, `data`, `reports`, `supabase` 구조 정리
-- GitHub Pages base path 대응
-- Supabase 조회/확인 상태 연결 포인트 정리
-- 검증 체크리스트 문서 및 체크 페이지 구축
+- `config.js` 의 BASE_PATH 계산 기준 재정의
+- 메인 화면 데이터 로딩 경로 검증
+- 상세 화면 링크 경로 검증
+- 4종 보고서 문서 갱신
 
 ### 제외 범위
-- 실제 GitHub 저장소 커밋 및 배포 실행
-- 실제 Supabase 키 입력 및 실환경 인증 연결
-- 서버 측 API 서비스의 최종 운영 배포
+- GitHub Pages 브랜치 설정 변경
+- Supabase 실서비스 키 입력
+- 조회 이력 테이블 운영 데이터 정비
 
-## 구현 전략
-### 1. 구조 정리
-- 실행용 파일은 루트에 배치한다.
-- `Integrated Agent Design System` 폴더에는 설계 문서만 유지한다.
-- 데이터 원본과 UI 렌더링 경로를 분리하되, 상대 경로와 base path 함수로 연결한다.
+## 수정 전략
+### 1. 배포 기준 고정
+- 사용자 페이지 저장소인 경우 base path 를 빈 문자열로 유지한다.
+- 프로젝트 페이지 저장소에만 하위 경로를 붙이도록 분기 규칙을 명확히 한다.
 
-### 2. 프런트엔드 보강
-- 메인 화면은 카테고리별 요약, 미확인 개수, 최신 보고서, 동적 리스트를 제공한다.
-- 상세 화면은 보고서 메타데이터, Markdown 렌더링, 조회 이력 기록, 확인 처리 흐름을 제공한다.
-- 체크리스트 전용 페이지는 로컬 저장소 기반 체크 상태 관리와 다음 단계 제안을 제공한다.
+### 2. 참조 경로 일관화
+- `buildAppPath()` 를 통해 생성되는 `data`, `pages`, `assets` 경로가 모두 동일 기준을 따르도록 한다.
+- 루트 배포와 프로젝트 배포를 혼합 가정하지 않도록 설정 책임을 한 곳에 모은다.
 
-### 3. 데이터 및 연결 전략
-- `data/reports.json`은 화면 렌더링 기준의 메타데이터 원본으로 유지한다.
-- Supabase는 조회 이력과 확인 상태만 담당하도록 분리한다.
-- 정적 콘텐츠는 GitHub Pages, 동적 상태는 Supabase가 담당한다.
-
-### 4. 오류 대응 전략
-- 파일 단위로 작업을 분리해 실패 지점을 명확히 식별한다.
-- 동일 단계 자동 재시도는 최대 2회로 제한한다.
-- 3회째 동일 단계 오류 시 원인과 개선 방안을 보고하고 다음 결정을 대기한다.
+### 3. 검증 기준 문서화
+- 잘못된 주소 추정이 아니라 실제 배포 URL과 저장소 유형을 먼저 확인하는 절차를 문서화한다.
+- 캐시 이슈와 경로 이슈를 분리해 판단하도록 검증 시나리오를 정리한다.
 
 ## 단계별 계획
-1. 루트 기준 실행 구조 정리
-2. 메인 화면 로직 보강
-3. 상세 화면 로직 보강
-4. HTML 구조와 데이터 메타 정합성 보강
-5. 점검 체크리스트 문서 및 전용 페이지 추가
-6. 보고서 4종을 실제 변경 내용 기준으로 업데이트
+1. 저장소 유형과 실제 배포 주소를 기준으로 경로 정책 재정의
+2. `config.js` 의 base path 계산 로직 수정
+3. `data/reports.json`, `pages/report-detail.html` 링크 동작 재검증
+4. 원인 분석과 수정 결과를 4종 보고서로 기록
 
 ## 산출물
-- `index.html`
-- `pages/report-detail.html`
-- `pages/root-structure-validation-checklist.html`
-- `assets/js/main.js`
-- `assets/js/detail.js`
-- `assets/js/root-structure-validation-checklist.js`
-- `data/reports.json`
-- `data/root-structure-validation-checklist.json`
-- 보고서 4종 Markdown 파일
-- 설계 문서 모음
+- 수정된 경로 기준 문서
+- 갱신된 4종 보고서
+- 재검증 가능한 테스트 시나리오와 결과 기록
 
 ## 완료 기준
-- 루트 기준 정적 구조에서 메인/상세/체크리스트 페이지가 모두 열린다.
-- `data/reports.json` 기준으로 보고서 목록과 상세 링크가 정상 동작한다.
-- Supabase 미설정 상태에서도 화면이 깨지지 않는다.
-- 체크리스트 페이지에서 체크 상태 저장, 진행률 계산, 다음 단계 표시가 동작한다.
-- 보고서 4종이 현재 작업 내역을 반영한 상태로 저장된다.
+- 루트 주소 접속 시 메인 화면 데이터가 정상 표시된다.
+- 바로가기 링크와 상세 페이지가 모두 정상 이동한다.
+- 캐시를 비운 뒤에도 동일하게 정상 동작한다.
+- 원인, 수정 내용, 검증 결과가 4종 보고서에 일관되게 반영된다.
