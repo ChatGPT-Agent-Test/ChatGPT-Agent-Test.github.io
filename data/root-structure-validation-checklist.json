@@ -141,7 +141,7 @@
           "title": "로컬 및 초안 환경",
           "items": [
             { "id": "pages-env-1", "text": "로컬에서는 BASE_PATH='' 기준으로 정상 동작한다" },
-            { "id": "pages-env-2", "text": "Pages 환경에서는 BASE_PATH='/report-hub-site' 기준으로 정상 동작한다" }
+            { "id": "pages-env-2", "text": "현재 사용자 페이지 배포에서는 BASE_PATH='' 기준으로 정상 동작한다" }
           ]
         }
       ]

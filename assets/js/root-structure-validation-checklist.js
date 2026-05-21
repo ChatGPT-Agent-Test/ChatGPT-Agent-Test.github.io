@@ -11,13 +11,17 @@ function buildChecklistPath(path) {
 }
 
 async function fetchChecklistData() {
-  const response = await fetch(buildChecklistPath('/data/root-structure-validation-checklist.json'));
+  const response = await fetch(buildChecklistPath('/data/root-structure-validation-checklist.json'), {
+    cache: 'no-store'
+  });
   if (!response.ok) throw new Error('체크리스트 데이터를 불러오지 못했습니다.');
   return response.json();
 }
 
 async function fetchReportData() {
-  const response = await fetch(buildChecklistPath('/data/reports.json'));
+  const response = await fetch(buildChecklistPath('/data/reports.json'), {
+    cache: 'no-store'
+  });
   if (!response.ok) throw new Error('보고서 데이터를 불러오지 못했습니다.');
   return response.json();
 }
