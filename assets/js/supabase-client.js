@@ -139,3 +139,25 @@ async function upsertAcknowledgement(reportId, viewerId) {
 
   return { success: true };
 }
+
+async function writeSystemLog(logType, logLevel, message, context = {}) {
+  const client = createSupabaseClientInstance();
+  if (!client || window.APP_CONFIG?.FEATURES?.enableSystemLogging === false) {
+    return { success: false, skipped: true };
+  }
+
+  const { error } = await client.from('system_logs').insert({
+    log_type: logType,
+    log_level: logLevel,
+    message,
+    context,
+    created_at: new Date().toISOString()
+  });
+
+  if (error) {
+    console.error('Failed to write system log', error);
+    return { success: false, skipped: false, error };
+  }
+
+  return { success: true };
+}

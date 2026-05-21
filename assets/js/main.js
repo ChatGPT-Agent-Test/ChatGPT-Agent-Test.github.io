@@ -30,6 +30,30 @@ function getSupabaseStatusSummary() {
   };
 }
 
+function buildMainLogContext(extra = {}) {
+  return {
+    page: 'main',
+    basePath: getBasePath() || '/',
+    pathname: window.location.pathname,
+    ...extra
+  };
+}
+
+async function writeClientLogSafely(logLevel, message, context = {}) {
+  if (typeof writeSystemLog !== 'function') return;
+
+  try {
+    await writeSystemLog(
+      'main_page_initialization',
+      logLevel,
+      message,
+      buildMainLogContext(context)
+    );
+  } catch (error) {
+    console.error('Failed to write main page log', error);
+  }
+}
+
 function normalizeCategories(data) {
   const categories = Array.isArray(data?.categories) ? data.categories : [];
   if (categories.length > 0) return categories;
@@ -177,6 +201,8 @@ function renderTabs(cards) {
 }
 
 async function init() {
+  writeClientLogSafely('info', 'Main page initialization started');
+
   const [data, viewer] = await Promise.all([
     fetchReports(),
     getCurrentViewer()
@@ -198,6 +224,11 @@ async function init() {
   renderSummary(cards);
   renderTabs(cards);
   renderList(cards.find((card) => card.key === activeCategory)?.items ?? []);
+
+  writeClientLogSafely('info', 'Main page initialization completed', {
+    reportCount: Array.isArray(data?.reports) ? data.reports.length : 0,
+    categoryCount: cards.length
+  });
 }
 
 init().catch((error) => {
@@ -223,4 +254,8 @@ init().catch((error) => {
   if (reportList) {
     reportList.innerHTML = '<div class="report-item">데이터를 불러오지 못했습니다.</div>';
   }
+
+  writeClientLogSafely('error', 'Main page initialization failed', {
+    errorMessage: error?.message ?? String(error)
+  });
 });

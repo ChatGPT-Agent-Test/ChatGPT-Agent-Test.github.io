@@ -1,5 +1,6 @@
 window.APP_CONFIG = {
-  REPOSITORY_NAME: 'report-hub-site',
+  REPOSITORY_NAME: 'ChatGPT-Agent-Test.github.io',
+  GITHUB_PAGES_MODE: 'auto',
   BASE_PATH: '',
   SUPABASE_URL: 'https://YOUR_PROJECT.supabase.co',
   SUPABASE_ANON_KEY: 'YOUR_SUPABASE_ANON_KEY',
@@ -7,7 +8,8 @@ window.APP_CONFIG = {
   FEATURES: {
     enableSupabase: true,
     enableAcknowledgement: true,
-    enableViewLogging: true
+    enableViewLogging: true,
+    enableSystemLogging: true
   }
 };
 
@@ -22,12 +24,29 @@ window.APP_CONFIG = {
   }
 
   const firstSegment = pathname.split('/').filter(Boolean)[0] ?? '';
-  if (firstSegment && firstSegment !== 'index.html' && firstSegment !== 'pages') {
+  const repositoryName = config.REPOSITORY_NAME ?? '';
+  const normalizedRepositoryName = repositoryName.toLowerCase();
+  const githubOwner = hostname.replace(/\.github\.io$/i, '').toLowerCase();
+  const isUserPageRepository =
+    config.GITHUB_PAGES_MODE === 'user' ||
+    (
+      config.GITHUB_PAGES_MODE !== 'project' &&
+      normalizedRepositoryName === `${githubOwner}.github.io`
+    );
+
+  if (isUserPageRepository) {
+    config.BASE_PATH = '';
+    return;
+  }
+
+  if (firstSegment && firstSegment !== 'index.html') {
     config.BASE_PATH = `/${firstSegment}`;
     return;
   }
 
-  config.BASE_PATH = config.REPOSITORY_NAME ? `/${config.REPOSITORY_NAME}` : '';
+  config.BASE_PATH = config.GITHUB_PAGES_MODE === 'project' && repositoryName
+    ? `/${repositoryName}`
+    : '';
 })();
 
 function getBasePath() {
